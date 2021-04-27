@@ -1,0 +1,28 @@
+.bussiness-card {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+
+    .card-content {
+        margin: 0;
+        display: flex;
+    }
+
+    .header-image {
+        background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+        background-size: cover;
+    }
+
+    &__image {
+        max-height: 25vh;
+        width: auto;
+        margin: auto;
+    }
+
+    .mat-divider.content-divider {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        width: auto;
+        position: relative;
+    }
+}
