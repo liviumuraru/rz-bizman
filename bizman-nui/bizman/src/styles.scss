@@ -1,0 +1,60 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+// SCROLLBAR
+/* width */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: grey; 
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: grey; 
+}
+
+//TODO specificity
+.content-divider {
+    width: auto !important;
+    position: relative !important;
+
+    &-horizontal {
+        margin-top: 5px !important;
+        margin-bottom: 5px !important;
+    }
+
+    &-vertical {
+        align-self: normal;
+    }
+
+    &-no-spacing {
+        margin: 0 !important;
+    }
+}
+
+//TODO specificity
+:ng-deep .mat-card-actions.actions {
+    margin: 0;
+    padding: 0;
+}
+
+.mat-form-field-wrapper {
+    padding: 0 !important;
+
+    .mat-form-field-underline {
+        position: initial !important;
+    }
+}

@@ -1,0 +1,16 @@
+<mat-card *ngFor="let business of businesses" class="card business-card">
+    <business-info [business]="business"></business-info>
+
+    <mat-divider class="content-divider content-divider-horizontal" *ngIf="business?.imgSrc"></mat-divider>
+
+    <mat-card-content>
+        <business-legal-status-list *ngIf="business.legalStatusList?.length > 0" [legalStatusList]="business.legalStatusList"></business-legal-status-list>
+    </mat-card-content>
+
+    <mat-card-actions class="actions">
+        <button (click)="goToDetails(business.id)" class="action" mat-raised-button color="primary">Manage</button>
+        <button class="action" mat-raised-button color="warn">Delete</button>
+    </mat-card-actions>
+</mat-card>
+<!-- TODO: search panel -->
+<!-- TODO: pagination? -->

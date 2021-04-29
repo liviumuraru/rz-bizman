@@ -1,0 +1,18 @@
+<mat-card-header class="card-header">
+    <button *ngIf="enableGoBack" mat-card-avatar (click)="goBack()" mat-icon-button class="icon-back">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div mat-card-avatar class="header-image"></div>
+    <mat-card-title *ngIf="business?.name">
+        {{business.name}}   
+    </mat-card-title>
+    <mat-card-subtitle *ngIf="business?.subtitle">
+        {{business.subtitle}} 
+    </mat-card-subtitle>
+</mat-card-header>
+
+<mat-divider class="content-divider content-divider-horizontal"></mat-divider>
+
+<mat-card-content class="card-content" *ngIf="business?.imgSrc">
+    <img class="card-content__image" mat-card-image [src]="business.imgSrc">        
+</mat-card-content>

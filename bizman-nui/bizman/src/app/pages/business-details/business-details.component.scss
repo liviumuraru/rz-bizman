@@ -1,0 +1,31 @@
+.card {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+
+    .tab-group {
+        margin-top: 15px;
+
+        .tab-content {
+            //margin-top: 15px;
+    
+            .legal-details-section {
+                display: flex;
+                justify-content: space-evenly;
+                align-items: center;
+                
+                .field-label {
+                    font-weight: bold;
+                }
+
+                .property, .value {
+                    width: 49%;
+                    padding: 5px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+        }
+    }
+}
