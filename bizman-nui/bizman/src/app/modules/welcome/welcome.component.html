@@ -1,0 +1,101 @@
+<mat-card class="card welcome-card">
+    <loader *ngIf="showLoader"></loader>
+
+    <section class="welcome-card__info-panel" *ngIf="characterData">
+        <section class="welcome-card__info-panel__text welcome-card__info-panel__text--large">
+            Hello, <b>{{characterData.firstName}} {{characterData.lastName}} ({{characterData.id}})</b>
+        </section>
+        <mat-divider class="content-divider content-divider-horizontal"></mat-divider>
+        <section class="welcome-card__info-panel__text">
+            This application servers as a central point of information upon public organisations and also as an aggregator of your own organisations or organisations you are a part of.
+        </section>
+        <section class="welcome-card__info-panel__text">
+            Below you will find a list of actions possible to you, depending on your current state of employment, your organisations and public information disclosed by the state.
+        </section>
+        <section class="welcome-card__info-panel__text">
+            <b>NOTICE:</b> Please understand that this is work in progress, and thus you might find issues and strange, unexpected behaviour. Not all functionality is implemented yet. Make sure to report a bug if you spot it. If you notice any areas where improvements could be made within this application, please e-mail us on Discordia. Thanks!
+        </section>
+        <mat-divider class="content-divider content-divider-horizontal" *ngIf="characterData.roles"></mat-divider>
+        <section *ngIf="characterData.roles" class="welcome-card__info-panel__roles welcome-card__info-panel__text">
+          <p>Your roles:</p>
+          <mat-chip-list>
+            <mat-chip *ngFor="let role of characterData.roles">
+              {{role.name}} - {{role.description}}
+            </mat-chip>
+          </mat-chip-list>
+      </section>
+    </section>
+
+    <mat-divider class="content-divider content-divider-horizontal" *ngIf="characterData"></mat-divider>
+
+    <mat-card-actions class="actions" *ngIf="characterData">
+        <section class="actions-card-row">
+            <mat-card (click)="goToCheckLicenseApplications()" matRipple class="card action-card" matBadge="7">
+                <mat-card-header>
+                  <mat-card-title>Organisation license applications</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <p>
+                    See, comment, approve or deny business applications filed by citizens of San Andreas. Requires role: Judge. You see this because you are a Judge. 
+                  </p>
+                </mat-card-content>
+            </mat-card>
+
+            <mat-card (click)="goToCheckLawsuits()" matRipple class="card action-card" matBadge="7">
+                <mat-card-header>
+                  <mat-card-title>Lawsuits</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <p>
+                    See, comment, schedule or share information upon any lawsuit. Requires role: Judge. You see this because you are a Judge. 
+                  </p>
+                </mat-card-content>
+            </mat-card>
+
+            <mat-card (click)="goToSelfOrganisations()" matRipple class="card action-card" matBadge="2">
+                <mat-card-header>
+                  <mat-card-title>My Organisations</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <p>
+                    Check the status of organisations you are a part of and perform actions on them based on your roles in those organisations.
+                  </p>
+                </mat-card-content>
+            </mat-card>
+
+            <mat-card (click)="goToSelfOrganisationApplications()" matRipple class="card action-card" matBadge="5">
+                <mat-card-header>
+                  <mat-card-title>My organisation requests</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <p>
+                    Start the process of creating a new organisation or check on your existing organisation requests.
+                  </p>
+                </mat-card-content>
+            </mat-card>
+        </section>
+        <section class="actions-card-row">
+            <mat-card (click)="goToSelfLawsuits()" matRipple class="card action-card" matBadge="6">
+                <mat-card-header>
+                  <mat-card-title>My lawsuits</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <p>
+                    Check lawsuits that you are a part of as any role, or file a new lawsuit
+                  </p>
+                </mat-card-content>
+            </mat-card>
+
+            <mat-card (click)="goToSelfInformation()" matRipple class="card action-card">
+                <mat-card-header>
+                  <mat-card-title>My citizen information</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <p>
+                    Check state information about yourself
+                  </p>
+                </mat-card-content>
+            </mat-card>
+        </section>
+    </mat-card-actions>
+</mat-card>

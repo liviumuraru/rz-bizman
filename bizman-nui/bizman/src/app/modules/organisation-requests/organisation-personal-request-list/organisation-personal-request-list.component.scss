@@ -3,6 +3,10 @@
     display: flex;
     flex-direction: column;
 
+    &.loader-card {
+        min-height: 40px;
+    }
+
     .actions {
         margin-top: 15px;
         margin: 0;

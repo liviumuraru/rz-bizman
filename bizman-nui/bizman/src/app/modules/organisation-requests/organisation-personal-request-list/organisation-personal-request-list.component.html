@@ -1,0 +1,43 @@
+<mat-card *ngIf="showLoader" class="card business-card loader-card">
+    <loader></loader>
+</mat-card>
+
+<mat-card class="card business-card new-request-card">
+    <mat-card-content>
+        <span>Create a new organisation request</span>
+        <button (click)="goToNewRequest()" mat-icon-button class="icon-add">
+            <mat-icon>add</mat-icon>
+        </button>
+    </mat-card-content>
+</mat-card>
+
+<mat-card *ngFor="let request of requests" class="card business-card">
+    <mat-card-header class="card-header">
+        <mat-card-title *ngIf="request?.name">
+            {{request.name}}   
+        </mat-card-title>
+        <mat-card-subtitle *ngIf="request?.location">
+            {{request.location}} 
+        </mat-card-subtitle>
+    </mat-card-header>
+    
+    <mat-divider class="content-divider content-divider-horizontal"></mat-divider>
+
+    <mat-card-content>
+        <section class="business-plan">
+            {{request.businessPlan}}
+        </section>
+        <mat-divider class="content-divider content-divider-horizontal"></mat-divider>
+        <mat-chip-list>
+            <mat-chip *ngFor="let orgType of request.orgTypes">
+                {{orgType.description}}
+            </mat-chip>
+        </mat-chip-list>    
+    </mat-card-content>
+
+    <mat-divider class="content-divider content-divider-horizontal"></mat-divider>
+
+    <mat-card-actions class="actions">
+        <button class="action" mat-raised-button color="primary">View</button>
+    </mat-card-actions>
+</mat-card>

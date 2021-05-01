@@ -1,9 +1,8 @@
+<loader *ngIf="showLoader"></loader>
 <mat-card class="card tab-card">
-    <loader *ngIf="showLoader"></loader>
-    
-    <business-info [business]="business" [enableGoBack]="true"></business-info>
+    <business-info *ngIf="business" [business]="business"></business-info>
 
-    <mat-tab-group mat-stretch-tabs mat-align-tabs="start" class="tab-group">
+    <mat-tab-group *ngIf="business" mat-stretch-tabs mat-align-tabs="start" class="tab-group">
         <mat-tab label="Management">
             <ng-template mat-tab-label>
                 <mat-icon class="tab-icon">work_outline</mat-icon>
@@ -44,30 +43,23 @@
                 Legal
             </ng-template>
             <section class="legal-content tab-content">
-                <section *ngIf="orgTypes?.length > 0" class="organization-type form-field-container legal-details-section">
+                <section *ngIf="business.orgTypes?.length > 0" class="organization-type form-field-container legal-details-section">
                     <section class="property field-label">Legal organization type</section>
                     <mat-divider [vertical]="true" class="content-divider-vertical content-divider"></mat-divider>
-                    <!-- <mat-form-field class="form-field value">
-                        <mat-select [(value)]="businessOrgTypeId">
-                            <mat-option *ngFor="let orgType of orgTypes" [value]="orgType.id">
-                                {{orgType.name}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field> -->
-                    <mat-chip-list class="value">
+                    <mat-chip-list *ngFor="let orgType of business.orgTypes" class="value">
                         <mat-chip>
-                            {{currentOrgType.name}}
+                            {{orgType.description}}
                         </mat-chip>
                     </mat-chip-list>
                 </section>
 
                 <mat-divider class="content-divider-no-spacing content-divider"></mat-divider>
 
-                <section *ngIf="legalStatusList?.length > 0" class="legal-statuses-container legal-details-section">
+                <!-- <section *ngIf="legalStatusList?.length > 0" class="legal-statuses-container legal-details-section">
                     <section class="field-label property">Legal status</section>
                     <mat-divider [vertical]="true" class="content-divider-vertical content-divider"></mat-divider>
                     <business-legal-status-list class="value" [legalStatusList]="legalStatusList"></business-legal-status-list>
-                </section>
+                </section> -->
 
                 <mat-divider class="content-divider-no-spacing content-divider"></mat-divider>
             </section>

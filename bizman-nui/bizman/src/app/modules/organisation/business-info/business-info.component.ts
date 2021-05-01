@@ -1,4 +1,5 @@
 import { Component, Input } from "@angular/core";
+import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
 import { Router } from "@angular/router";
 
 @Component({
@@ -8,16 +9,14 @@ import { Router } from "@angular/router";
 })
 export class BusinessInfoComponent {
     @Input()
-    enableGoBack = false;
-    @Input()
     business;
 
-    constructor(private router: Router) {
+    imageSrc: string;
+
+    constructor(private router: Router, private domSanitizer: DomSanitizer) {
     }
-    
-    async goBack() {
-        //TODO relative routes
-        // /business/:id
-        await this.router.navigate(['/bussiness']);
+
+    ngOnInit() {
+        this.imageSrc = this.business.image;
     }
 }

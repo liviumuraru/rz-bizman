@@ -1,28 +1,34 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { BusinessDetailsComponent } from './pages/business-details/business-details.component';
-import { BussinessSelectorComponent } from './pages/bussiness-selector/bussiness-selector.component';
-import { RootComponent } from './root.component';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
 const routes: Routes = [
   {
     path: '',
-    component: RootComponent
-  },
-  {
-    path: 'details/:id',
-    component: BusinessDetailsComponent,
-    pathMatch: 'full'
-  },
-  {
-    path: 'bussiness',
-    component: BussinessSelectorComponent,
-    pathMatch: 'full'
+    children: [
+      {
+        path: 'welcome',
+        loadChildren: () => import('./modules/welcome/welcome.module').then(module => module.WelcomeModule),
+      },
+      {
+        path: 'business',
+        loadChildren: () => import('./modules/organisation/organisation.module').then(module => module.OrganisationModule)
+      },
+      //TODO change business to organisation
+      {
+        path: 'organisation/requests',
+        loadChildren: () => import('./modules/organisation-requests/organisation-request.module').then(module => module.OrganisationRequestModule)
+      },
+      {
+        path: 'organisation',
+        redirectTo: 'business',
+        pathMatch: 'full'
+      }
+    ]
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})],
   exports: [RouterModule]
 })
 export class RootRoutingModule { }

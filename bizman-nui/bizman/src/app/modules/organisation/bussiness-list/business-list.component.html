@@ -1,7 +1,11 @@
+<mat-card *ngIf="showLoader" class="card business-card loader-card">
+    <loader></loader>
+</mat-card>
+
 <mat-card *ngFor="let business of businesses" class="card business-card">
     <business-info [business]="business"></business-info>
 
-    <mat-divider class="content-divider content-divider-horizontal" *ngIf="business?.imgSrc"></mat-divider>
+    <mat-divider class="content-divider content-divider-horizontal" *ngIf="business?.image"></mat-divider>
 
     <mat-card-content>
         <business-legal-status-list *ngIf="business.legalStatusList?.length > 0" [legalStatusList]="business.legalStatusList"></business-legal-status-list>

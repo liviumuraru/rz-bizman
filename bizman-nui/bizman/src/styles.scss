@@ -46,13 +46,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 //TODO specificity
-:ng-deep .mat-card-actions.actions {
+::ng-deep .mat-card-actions.actions {
     margin: 0;
     padding: 0;
 }
 
 .mat-form-field-wrapper {
     padding: 0 !important;
+
+    .mat-form-field-subscript-wrapper {
+        position: relative;
+    }
 
     .mat-form-field-underline {
         position: initial !important;

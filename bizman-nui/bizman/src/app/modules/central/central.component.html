@@ -1,4 +1,4 @@
-<section *ngIf="shouldShowUi()" class="bizman__page">
+<section class="bizman__page">
     <section class="header">
         <mat-toolbar class="header__toolbar" color="primary">
             <mat-toolbar-row class="header__toolbar__row">
@@ -10,7 +10,7 @@
                 <section class="title">State of San Andreas</section>
                 <!-- <span class="spacer"></span> -->
                 <section class="header__toolbar__row__actions header__toolbar__row__actions--right">
-                    <button (click)="closeUi()" mat-icon-button class="icon-close">
+                    <button (click)="close()" mat-icon-button class="icon-close">
                         <mat-icon>close</mat-icon>
                     </button>
                 </section>
@@ -18,6 +18,8 @@
         </mat-toolbar>
     </section>
     <section class="content">
+        <button routerLink="welcome">welcome</button>
+        <button routerLink="business">business</button>
         <loader *ngIf="showLoader"></loader>
         <router-outlet></router-outlet>
     </section>

@@ -1,0 +1,54 @@
+.welcome-card, .card {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    min-height: 40px;
+
+    &__info-panel {
+        display: flex;
+        flex-direction: column;
+
+        &__text {
+            font-size: 1.5em;
+            margin-top: 15px;
+            line-height: 1.15em;
+
+            &--large {
+                font-size: 2.5em;
+                align-self: center;
+            }
+        }
+    }
+
+    .actions {
+        margin-top: 15px;
+        margin: 0;
+        padding: 0;
+
+        .actions-card-row {
+            display: flex;
+            flex-direction: row;
+
+            &:last-child {
+                margin-right: 0;
+            }
+
+            .action-card {
+                min-width: 20%;
+                margin-right: 1%;
+                cursor: pointer;
+    
+                ::ng-deep .mat-card-header {
+                    .mat-card-header-text {
+                        margin: 0;
+                    }                
+                }
+    
+                ::ng-deep .mat-badge-content {
+                    right: 1%;
+                    top: 1%;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,47 @@
+<mat-card class="card business-card new-request-card">
+    <loader *ngIf="showLoader"></loader>
+    <mat-card-content>
+        <form [formGroup]="formGroup" class="new-request-form">
+            <mat-form-field class="form-control organisation-name-form-control">
+                <mat-label>Organisation name</mat-label>
+                <input maxlength="256" [formControl]="organisationNameFc" matInput>
+                <mat-hint>Choose a name that has not already been used.</mat-hint>
+                <mat-error *ngIf="organisationNameFc.hasError('required')">
+                    This field is required.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-control organisation-purpose-form-control">
+                <mat-label>Organisation action plan</mat-label>
+                <textarea maxlength="4096" [formControl]="organisationPurposeFc" matInput></textarea>
+                <mat-hint>Describe your business or action plan.</mat-hint>
+                <mat-error *ngIf="organisationPurposeFc.hasError('required')">
+                    This field is required.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-control organisation-purpose-form-control">
+                <mat-label>Location</mat-label>
+                <input maxlength="256" [formControl]="organisationLocationFc" matInput>
+                <mat-hint>Where do you plan to operate from?</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field class="form-control organisation-legal-status-form-control">
+                <mat-label>What is this organisations legal entity status?</mat-label>
+                <mat-select multiple [formControl]="organisationTypesFc">
+                    <mat-option *ngFor="let orgType of orgTypes" [value]="orgType.id">
+                        {{orgType.description}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="organisationTypesFc.hasError('required')">
+                    This field is required.
+                </mat-error>
+            </mat-form-field>
+        </form>
+    </mat-card-content>
+    <mat-card-actions class="actions">
+        <button (click)="submit()" mat-raised-button color="primary">
+            Submit for approval
+        </button>
+    </mat-card-actions>
+</mat-card>

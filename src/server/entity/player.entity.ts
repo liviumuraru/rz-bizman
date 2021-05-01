@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { Character } from "./character.entity";
 
 @Entity({name: "players"})
 export class Player {
@@ -10,7 +11,11 @@ export class Player {
 
     @Column({
         length: 256,
-        type: "varchar"
+        type: "varchar",
+        name: "primaryFiveMId"
     })
-    steamIdHex: string;
+    primaryFiveMId: string;
+
+    @OneToMany(type => Character, character => character.player, {cascade: true})
+    characters: Character[];
 }

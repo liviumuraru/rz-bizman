@@ -1,0 +1,15 @@
+<mat-card-header class="card-header">
+    <div mat-card-avatar class="header-image"></div>
+    <mat-card-title *ngIf="business?.name">
+        {{business.name}}   
+    </mat-card-title>
+    <mat-card-subtitle *ngIf="business?.subtitle">
+        {{business.subtitle}} 
+    </mat-card-subtitle>
+</mat-card-header>
+
+<mat-divider *ngIf="business" class="content-divider content-divider-horizontal"></mat-divider>
+
+<mat-card-content class="card-content" *ngIf="business?.image && imageSrc">
+    <img class="card-content__image" mat-card-image [src]="imageSrc">        
+</mat-card-content>

@@ -15,7 +15,9 @@ ui_page 'client/index.html'
 files {
     'client/index.html',
     'client/*.js',
+    'client/*.js.map',
     'client/styles.css',
     'client/favicon.ico',
+    'client/assets/*',
     'assets/*'
 }

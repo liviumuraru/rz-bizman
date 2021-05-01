@@ -1,0 +1,29 @@
+.business-card {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+
+    &.loader-card {
+        min-height: 40px;
+    }
+
+    .actions {
+        margin-top: 15px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .new-request-form {
+        display: flex;
+        flex-direction: column;
+        font-size: 1.5em;
+
+        .form-control {
+            margin-top: 2.5%;
+        }
+
+        :first-child {
+            margin-top: 0;
+        }
+    }
+}
