@@ -5,11 +5,11 @@ import { PlayerService } from "src/app/core/player/player.service";
 import { RouterCommService } from "src/app/core/routing/routing.service";
 
 @Component({
-    selector: 'organisation-personal-request-list',
-    templateUrl: './organisation-personal-request-list.component.html',
-    styleUrls: ['./organisation-personal-request-list.component.scss']
+    selector: 'organisation-management-request-list',
+    templateUrl: './organisation-management-request-list.component.html',
+    styleUrls: ['./organisation-management-request-list.component.scss']
 })
-export class OrganisationPersonalRequestListComponent {
+export class OrganisationManagementRequestListComponent {
     requests = [];
     showLoader = true;
 
@@ -26,7 +26,7 @@ export class OrganisationPersonalRequestListComponent {
 
     async goToDetails(id: string | number) {
         //TODO
-        await this.router.navigate(['details', id.toString()], {relativeTo: this.route});
+        await this.router.navigate(['../details', id.toString()], {relativeTo: this.route});
     }
 
     async goToNewRequest() {
@@ -35,7 +35,8 @@ export class OrganisationPersonalRequestListComponent {
 
     async ngOnInit() {
         const character = await this.playerService.getActiveCharacterData();
-        this.requests = await this.orgService.getOrgRequests(character.id);
+        //TODO current character
+        this.requests = await this.orgService.getOrgRequestsAsManager(character.id);
         this.showLoader = false;
     }
 }

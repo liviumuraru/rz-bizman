@@ -16,6 +16,14 @@ export class Player {
     })
     primaryFiveMId: string;
 
-    @OneToMany(type => Character, character => character.player, {cascade: true})
+    @Column({
+        length: 256,
+        type: "varchar",
+        name: "sessionSourceId",
+        nullable: true
+    })
+    sessionSourceId: string;
+
+    @OneToMany(() => Character, character => character.player, {cascade: true})
     characters: Character[];
 }

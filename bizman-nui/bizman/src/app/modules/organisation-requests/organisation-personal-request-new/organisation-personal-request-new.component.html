@@ -1,47 +1,147 @@
 <mat-card class="card business-card new-request-card">
     <loader *ngIf="showLoader"></loader>
     <mat-card-content>
-        <form [formGroup]="formGroup" class="new-request-form">
-            <mat-form-field class="form-control organisation-name-form-control">
-                <mat-label>Organisation name</mat-label>
-                <input maxlength="256" [formControl]="organisationNameFc" matInput>
-                <mat-hint>Choose a name that has not already been used.</mat-hint>
-                <mat-error *ngIf="organisationNameFc.hasError('required')">
-                    This field is required.
-                </mat-error>
-            </mat-form-field>
+        <mat-vertical-stepper #stepper>
+            <mat-step>
+                <form class="new-request-form">
+                    <ng-template matStepLabel>Fill out the basics</ng-template>
+                    <mat-form-field class="form-control organisation-name-form-control">
+                        <mat-label>Organisation name</mat-label>
+                        <input maxlength="256" [formControl]="organisationNameFc" matInput>
+                        <mat-hint>Choose a name that has not already been used.</mat-hint>
+                        <mat-error *ngIf="organisationNameFc.hasError('required')">
+                            This field is required.
+                        </mat-error>
+                    </mat-form-field>
 
-            <mat-form-field class="form-control organisation-purpose-form-control">
-                <mat-label>Organisation action plan</mat-label>
-                <textarea maxlength="4096" [formControl]="organisationPurposeFc" matInput></textarea>
-                <mat-hint>Describe your business or action plan.</mat-hint>
-                <mat-error *ngIf="organisationPurposeFc.hasError('required')">
-                    This field is required.
-                </mat-error>
-            </mat-form-field>
+                    <mat-form-field class="form-control organisation-purpose-form-control">
+                        <mat-label>Organisation action plan</mat-label>
+                        <textarea maxlength="4096" [formControl]="organisationPurposeFc" matInput></textarea>
+                        <mat-hint>Describe your business or action plan.</mat-hint>
+                        <mat-error *ngIf="organisationPurposeFc.hasError('required')">
+                            This field is required.
+                        </mat-error>
+                    </mat-form-field>
 
-            <mat-form-field class="form-control organisation-purpose-form-control">
-                <mat-label>Location</mat-label>
-                <input maxlength="256" [formControl]="organisationLocationFc" matInput>
-                <mat-hint>Where do you plan to operate from?</mat-hint>
-            </mat-form-field>
+                    <mat-form-field class="form-control organisation-purpose-form-control">
+                        <mat-label>Location</mat-label>
+                        <input maxlength="256" [formControl]="organisationLocationFc" matInput>
+                        <mat-hint>Where do you plan to operate from?</mat-hint>
+                    </mat-form-field>
 
-            <mat-form-field class="form-control organisation-legal-status-form-control">
-                <mat-label>What is this organisations legal entity status?</mat-label>
-                <mat-select multiple [formControl]="organisationTypesFc">
-                    <mat-option *ngFor="let orgType of orgTypes" [value]="orgType.id">
-                        {{orgType.description}}
-                    </mat-option>
-                </mat-select>
-                <mat-error *ngIf="organisationTypesFc.hasError('required')">
-                    This field is required.
+                    <mat-form-field class="form-control organisation-legal-status-form-control">
+                        <mat-label>Legal entity statuses</mat-label>
+                        <mat-select multiple [formControl]="organisationTypesFc">
+                            <mat-option *ngFor="let orgType of orgTypes" [value]="orgType.id">
+                                {{orgType.description}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="organisationTypesFc.hasError('required')">
+                            This field is required.
+                        </mat-error>
+                    </mat-form-field>
+                </form>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Fill out the ownership</ng-template>
+                <form class="new-request-form">
+                    <mat-form-field class="form-control participants-chip-list">
+                        <mat-chip-list #chipList>
+                            <mat-chip *ngFor="let participant of participants" [selectable]="participant.selectable"
+                                [removable]="participant.removable" (removed)="removeParticipant(participant)">
+                                {{getParticipantName(participant)}}
+                                <mat-icon matChipRemove *ngIf="participant.removable">cancel</mat-icon>
+                            </mat-chip>
+                            <input placeholder="Participants" #addParticipantInput [formControl]="addParticipantFc"
+                                [matAutocomplete]="auto" [matChipInputFor]="chipList" matChipInputAddOnBlur="false"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
+                        </mat-chip-list>
+                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedAddParticipant($event)">
+                            <mat-option *ngFor="let participant of filteredCharacters | async" [value]="participant.id">
+                                {{getParticipantSelectName(participant)}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+
+                    <mat-form-field class="form-control total-shares-form-control">
+                        <mat-label>Total Shares</mat-label>
+                        <input maxlength="4" [formControl]="totalSharesFc" matInput>
+                        <mat-hint>How many total available shares?</mat-hint>
+                        <mat-error *ngIf="totalSharesFc.hasError('required')">
+                            This field is required.
+                        </mat-error>
+                        <mat-error *ngIf="totalSharesFc.hasError('max')">
+                            Maximum value is 1000.
+                        </mat-error>
+                        <mat-error *ngIf="totalSharesFc.hasError('invalid')">
+                            Value must be a valid integer number.
+                        </mat-error>
+                        <mat-error *ngIf="totalSharesFc.hasError('negativeNonZero')">
+                            Value must be a positive, non-zero integer number.
+                        </mat-error>
+                    </mat-form-field>
+                </form>
+                <mat-table [dataSource]="owners">
+                    <ng-container matColumnDef="actions">
+                        <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+                        <mat-cell *matCellDef="let owner">
+                            <button type="button" (click)="removeOwnership(owner)" mat-icon-button class="icon-back">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="name">
+                        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+                        <mat-cell *matCellDef="let owner"> {{getOwnerTableName(owner)}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="flatShares">
+                        <mat-header-cell *matHeaderCellDef> Flat shares </mat-header-cell>
+                        <mat-cell *matCellDef="let owner">
+                            <mat-form-field class="form-control owner-flat-shares-form-control">
+                                <input maxlength="6" [formControl]="owner.flatSharesFc" matInput>
+                                <mat-error *ngIf="owner.flatSharesFc.hasError('required')">
+                                    Value cannot be empty.
+                                </mat-error>
+                                <mat-error *ngIf="owner.flatSharesFc.hasError('invalid')">
+                                    Value must be a valid integer number.
+                                </mat-error>
+                                <mat-error *ngIf="owner.flatSharesFc.hasError('negativeNonZero')">
+                                    Value must be a positive, non-zero integer number.
+                                </mat-error>
+                            </mat-form-field>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="percentageShares">
+                        <mat-header-cell *matHeaderCellDef> Percentage of total shares </mat-header-cell>
+                        <mat-cell *matCellDef="let owner"> {{owner.percentageShares}} </mat-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+                <mat-error *ngIf="sharesFormGroup?.hasError('shares')">
+                    Number of divided shares does not equal total number of shares.
                 </mat-error>
-            </mat-form-field>
-        </form>
+
+                <form class="new-request-form">
+                    <mat-form-field class="form-control add-owner-form-control">
+                        <mat-label>Add a new shareholder by selecting one from the below</mat-label>
+                        <mat-select (selectionChange)="addNewOwner($event)">
+                            <mat-option *ngFor="let participant of participants" [value]="participant.participant.id">
+                                {{getParticipantName(participant)}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </form>
+            </mat-step>
+            <mat-step class="mat-card-actions">
+                <ng-template matStepLabel>Submit for approval</ng-template>
+                <button class="actions" (click)="submit()" mat-raised-button color="primary">
+                    Submit for approval
+                </button>
+            </mat-step>
+        </mat-vertical-stepper>
     </mat-card-content>
-    <mat-card-actions class="actions">
-        <button (click)="submit()" mat-raised-button color="primary">
-            Submit for approval
-        </button>
-    </mat-card-actions>
 </mat-card>

@@ -2,15 +2,6 @@
     <loader></loader>
 </mat-card>
 
-<mat-card class="card business-card new-request-card">
-    <mat-card-content>
-        <button (click)="goToNewRequest()" mat-icon-button class="icon-add">
-            <span>Create a new organisation request</span>
-            <mat-icon>add</mat-icon>
-        </button>
-    </mat-card-content>
-</mat-card>
-
 <mat-card *ngFor="let request of requests" class="card business-card request-info-card">
     <request-info [request]="request"></request-info>
 

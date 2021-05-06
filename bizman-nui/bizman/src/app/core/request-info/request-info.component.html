@@ -1,0 +1,26 @@
+<mat-card-header class="card-header">
+    <mat-card-title *ngIf="request?.name">
+        {{request.name}}   
+    </mat-card-title>
+    <mat-card-subtitle *ngIf="request?.location">
+        {{request.location}} 
+    </mat-card-subtitle>
+</mat-card-header>
+
+<mat-divider class="content-divider content-divider-horizontal"></mat-divider>
+
+<mat-card-content>
+    <section *ngIf="request.creator" class="business-plan">
+        Created by: {{request.creator.firstName}} {{request.creator.lastName}} ({{request.creator.id}})
+    </section>
+    <mat-divider class="content-divider content-divider-horizontal"></mat-divider>
+    <section class="business-plan">
+        {{request.businessPlan}}
+    </section>
+    <mat-divider class="content-divider content-divider-horizontal"></mat-divider>
+    <mat-chip-list>
+        <mat-chip *ngFor="let orgType of request.orgTypes">
+            {{orgType.description}}
+        </mat-chip>
+    </mat-chip-list>
+</mat-card-content>

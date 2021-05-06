@@ -1,0 +1,16 @@
+<section class="chat-container chat">
+    <mat-chip-list [selectable]="'false'" *ngFor="let message of messages"
+        class="message"
+        [class.left-align]="isSelfMessage(message) ? true : false"
+        [class.right-align]="!isSelfMessage(message) ? true : false">
+        <mat-chip [color]="'primary'" class="chat-message-part sender">
+            {{getDisplayName(message)}}  
+        </mat-chip>
+        <mat-chip class="chat-message-part message">
+            {{message.message}}
+        </mat-chip>
+        <!-- <mat-chip *ngIf="message.datetime" class="chat-message-part datetime">
+            {{getDisplayDateTime(message)}}
+        </mat-chip> -->
+      </mat-chip-list>
+</section>

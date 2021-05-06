@@ -7,8 +7,10 @@
   "scripts": {
     "ng": "ng",
     "serve:dev://fivem/rz": "ng serve --watch --base-href /client/",
-    "build:prod://fivem/rz": "ng build --named-chunks true --prod --watch --delete-output-path false --output-hashing none --base-href /client/",
-    "build:dev://fivem/rz": "ng build --named-chunks true --watch --delete-output-path false --output-hashing none --base-href /client/",
+    "build:prod:watch://fivem/rz": "ng build --named-chunks true --prod --watch --delete-output-path false --output-hashing none --base-href /client/",
+    "build:prod://fivem/rz": "ng build --named-chunks true --prod --delete-output-path false --output-hashing none --base-href /client/",
+    "build:dev:watch://fivem/rz": "ng build --named-chunks true --watch --delete-output-path false --output-hashing none --base-href /client/",
+    "build:dev:watch": "ng build --named-chunks true --watch --delete-output-path false --output-hashing none --base-href /client/",
     "lint": "ng lint"
   },
   "private": true,
@@ -24,6 +26,8 @@
     "@angular/platform-browser": "~11.2.7",
     "@angular/platform-browser-dynamic": "~11.2.7",
     "@angular/router": "~11.2.7",
+    "moment": "^2.29.1",
+    "pdf-lib": "^1.16.0",
     "rxjs": "~6.6.7",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.3"

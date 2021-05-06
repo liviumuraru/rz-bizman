@@ -24,6 +24,15 @@
             </mat-chip>
           </mat-chip-list>
       </section>
+      <mat-divider class="content-divider content-divider-horizontal" *ngIf="characterData.roles"></mat-divider>
+      <section>
+        DEV ONLY CHARACTER CHANGE:
+      </section>
+      <mat-select (selectionChange)="onChangeCharacterEvent($event)" [(value)]="selectedCharId">
+        <mat-option *ngFor="let character of characters" [value]="character.id">
+            {{getCharacterDisplayName(character)}}
+        </mat-option>
+      </mat-select>
     </section>
 
     <mat-divider class="content-divider content-divider-horizontal" *ngIf="characterData"></mat-divider>

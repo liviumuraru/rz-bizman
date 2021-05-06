@@ -15,11 +15,21 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
+import { OrganisationPersonalRequestDetailsComponent } from './organisation-personal-request-details/organisation-personal-request-details.component';
+import { RequestInfoModule } from 'src/app/core/request-info/request-info.module';
+import { OrganisationManagementRequestListComponent } from './organisation-management-request-list/organisation-management-request-list.component';
+import { ChatModule } from 'src/app/core/chat/chat.module';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatTableModule } from '@angular/material/table';
+import { MatStepperModule } from '@angular/material/stepper';
 
 @NgModule({
   declarations: [
     OrganisationPersonalRequestListComponent,
-    OrganisationPersonalRequestNewComponent
+    OrganisationPersonalRequestNewComponent,
+    OrganisationPersonalRequestDetailsComponent,
+    OrganisationManagementRequestListComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +45,13 @@ import { MatChipsModule } from '@angular/material/chips';
     ReactiveFormsModule,
     MatSelectModule,
     MatInputModule,
-    MatChipsModule
+    MatChipsModule,
+    RequestInfoModule,
+    ChatModule,
+    MatExpansionModule,
+    MatAutocompleteModule,
+    MatTableModule,
+    MatStepperModule
   ]
 })
 export class OrganisationRequestModule { }

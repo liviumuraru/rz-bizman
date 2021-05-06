@@ -1,0 +1,46 @@
+.chat.chat-container {
+    display: flex;
+    flex-direction: column;
+
+    .message {
+        display: flex;
+
+        ::ng-deep .mat-chip-list-wrapper {
+            margin: 0;
+            max-width: 75%;
+    
+            .mat-chip {
+                display: flex;
+                height: auto;
+                flex-direction: column;
+            }
+
+            .mat-chip.sender {
+                white-space: nowrap;
+                background: rgba(103, 58, 183, 0.5);
+            }
+        }
+    }
+
+    .left-align {
+        justify-content: flex-start;
+        ::ng-deep .mat-chip-list-wrapper {
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-items: flex-start;
+
+            .mat-chip.sender {
+                background: rgba(58, 183, 96, 0.5);
+            }
+        }
+    }
+
+    .right-align {
+        justify-content: flex-end;
+        ::ng-deep .mat-chip-list-wrapper {
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-items: flex-start;
+        }
+    }
+}

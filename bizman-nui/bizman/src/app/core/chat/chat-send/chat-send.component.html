@@ -1,0 +1,11 @@
+<form (ngSubmit)="onSubmit()" class="chat-form">
+    <mat-form-field class="form-control organisation-name-form-control">
+        <mat-label>Type the message you want to send here.</mat-label>
+        <input maxlength="2048" [formControl]="chatMessageFc" matInput>
+        <mat-error *ngIf="chatMessageFc.hasError('required')">
+            There is no message to send.
+        </mat-error>
+    </mat-form-field>
+
+    <button class="send-button" mat-raised-button color="primary" type="submit">Send</button>
+</form>

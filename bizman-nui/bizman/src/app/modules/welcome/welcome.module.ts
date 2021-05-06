@@ -10,6 +10,7 @@ import { WelcomeComponent } from '../welcome/welcome.component';
 import { CommonModule } from '@angular/common';
 import { WelcomeRoutingModule } from './welcome.routing.module';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { MatChipsModule } from '@angular/material/chips';
     MatIconModule,
     MatRippleModule,
     MatBadgeModule,
-    MatChipsModule
+    MatChipsModule,
+    MatSelectModule
   ]
 })
 export class WelcomeModule { }

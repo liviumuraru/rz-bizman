@@ -8,7 +8,7 @@
     }
 
     .actions {
-        margin-top: 15px;
+        margin-top: 2.5%;
         margin: 0;
         padding: 0;
     }
@@ -18,8 +18,24 @@
         flex-direction: column;
         font-size: 1.5em;
 
-        .form-control {
-            margin-top: 2.5%;
+        ::ng-deep .form-control {
+            margin-top: 2.5% !important;
+            //TODO remove important
+        }
+
+        .participants-chip-list {
+            ::ng-deep .mat-chip-list-wrapper {
+                .mat-standard-chip {
+                    margin: 2px;
+                }
+            }
+        }
+
+        .mat-table {
+            ::ng-deep .mat-error {
+                margin-top: 2.5%;
+                margin-bottom: 2.5%;
+            }
         }
 
         :first-child {

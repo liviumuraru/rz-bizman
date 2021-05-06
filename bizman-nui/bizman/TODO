@@ -1,7 +1,12 @@
-app action page
-create filing for new business license
-see filings in progress
-mat-autocomplete search on business list component
+disallow removing a judge or the owner from a business request
+set ownership quantum per each owner/participant
+disallow removing participants with an ownership role from request
+let judges approve/deny a business request
 pagination on business list component?
-fix typo: bussiness(es)
+mat-autocomplete search on business list component
+filter business request list by status
+filter business request list by participants
+filter business request list by new messages
+show business request list new messages count
+generate org license based on data from request when approved
 remove RootComponent from routing

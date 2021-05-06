@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { CharacterService } from "src/app/core/character/character.service";
+import { PlayerService } from "src/app/core/player/player.service";
 
 @Component({
     selector: 'welcome',
@@ -10,19 +10,38 @@ import { CharacterService } from "src/app/core/character/character.service";
 export class WelcomeComponent implements OnInit {
     showLoader = true;
     characterData: any;
-    currentCharId = 4;
+    characters: any[] = [];
+    selectedCharId: number;
+    player: any;
 
-    constructor(private characterService: CharacterService, private router: Router, private route: ActivatedRoute) {
+    constructor(private playerService: PlayerService, private router: Router, private route: ActivatedRoute) {
     }
 
     async ngOnInit() {
         //TODO get active character
-        this.characterData = (await this.characterService.getCharacterData(this.currentCharId))[0];
+        this.player = await this.playerService.getPlayerData();
+        this.characters = this.player.characters;
+        await this.changeCharacter(this.characters[0].id);
         this.showLoader = false;
     }
 
-    async goToCheckLicenseApplications() {
+    async changeCharacter(characterId) {
+        this.characterData = this.playerService.changeActiveCharacter(characterId);
+        this.selectedCharId = this.characterData.id;
+    }
 
+    async goToCheckLicenseApplications() {
+        await this.router.navigate(['organisation/requests', 'management']);
+    }
+
+    getCharacterDisplayName(character) {
+        return `${character.firstName} ${character.lastName} (${character.id})`
+    }
+
+    async onChangeCharacterEvent(characterChangeEvent) {
+        this.showLoader = true;
+        await this.changeCharacter(characterChangeEvent.value);
+        this.showLoader = false;
     }
 
     async goToCheckLawsuits () {
@@ -32,7 +51,7 @@ export class WelcomeComponent implements OnInit {
     async goToSelfOrganisations () {
         await this.router.navigate(['business']);
     }
-
+ 
     async goToSelfOrganisationApplications() {
         await this.router.navigate(['organisation/requests']);
     }

@@ -1,0 +1,130 @@
+<mat-card class="card request-details-card">
+  <loader *ngIf="showLoader"></loader>
+  <mat-card-content>
+    <section class="title">
+      Organisation Request Details
+    </section>
+    <form class="request-details-form">
+      <mat-form-field class="form-control organisation-name-form-control">
+        <mat-label>Organisation name</mat-label>
+        <input maxlength="256" [formControl]="organisationNameFc" matInput>
+      </mat-form-field>
+
+      <mat-form-field class="form-control organisation-purpose-form-control">
+        <mat-label>Organisation action plan</mat-label>
+        <textarea maxlength="4096" [formControl]="organisationPurposeFc" matInput></textarea>
+      </mat-form-field>
+
+      <mat-form-field class="form-control organisation-purpose-form-control">
+        <mat-label>Location</mat-label>
+        <input maxlength="256" [formControl]="organisationLocationFc" matInput>
+      </mat-form-field>
+
+      <mat-form-field class="form-control organisation-legal-status-form-control">
+        <mat-label>Legal entity statuses</mat-label>
+        <mat-select multiple [formControl]="organisationTypesFc">
+          <mat-option *ngFor="let orgType of orgTypes" [value]="orgType.id">
+            {{orgType.description}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+    <form class="request-details-form">
+      <mat-form-field class="form-control participants-chip-list">
+        <mat-chip-list #chipList>
+          <mat-chip *ngFor="let participant of participants" [selectable]="participant.selectable"
+            [removable]="participant.removable" (removed)="removeParticipant(participant)">
+            {{getParticipantName(participant)}}
+            <mat-icon matChipRemove *ngIf="participant.removable">cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="Participants" #addParticipantInput [formControl]="addParticipantFc"
+            [matAutocomplete]="auto" [matChipInputFor]="chipList" matChipInputAddOnBlur="false"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedAddParticipant($event)">
+          <mat-option *ngFor="let participant of filteredCharacters | async" [value]="participant.id">
+            {{getParticipantSelectName(participant)}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field class="form-control total-shares-form-control">
+        <mat-label>Total Shares</mat-label>
+        <input maxlength="4" [formControl]="totalSharesFc" matInput>
+      </mat-form-field>
+    </form>
+    <mat-table [dataSource]="owners">
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let owner"> {{getOwnerTableName(owner)}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="flatShares">
+        <mat-header-cell *matHeaderCellDef> Flat shares </mat-header-cell>
+        <mat-cell *matCellDef="let owner"> {{owner.flatShares}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="percentageShares">
+        <mat-header-cell *matHeaderCellDef> Percentage of total shares </mat-header-cell>
+        <mat-cell *matCellDef="let owner"> {{owner.percentageShares}} </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Chat
+          </mat-panel-title>
+          <mat-panel-description>
+            Use this to converse with the participants
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <chat *ngIf="details?.chat?.messages" [selfChar]="character" [messages]="details.chat.messages"></chat>
+        <section *ngIf="details?.chat && (!details.chat.messages || details.chat.messages?.length === 0)">
+          Type a message down below to start conversing.
+        </section>
+        <mat-divider class="content-divider content-divider-horizontal"></mat-divider>
+        <chat-send *ngIf="details?.chat" (onSubmit)="sendChatMessage($event)"></chat-send>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <section class="actions">
+      <!-- <button class="actions" (click)="removeSelfApplication()" mat-raised-button color="primary" *ngIf="!isJudge()">
+        Remove application
+      </button> -->
+      <button class="actions approve" (click)="approve()" mat-raised-button color="accent" *ngIf="showActions()">
+        Approve
+        <mat-icon class="icon">done</mat-icon>
+      </button>
+      <button class="actions deny" (click)="deny()" mat-raised-button color="primary" *ngIf="showActions()">
+        Deny
+        <mat-icon class="icon">do_not_disturb</mat-icon>
+      </button>
+      <section *ngIf="isJudge() && isCreator() && !details?.approved && !details?.denied" class="self-judge">
+        You cannot approve or deny your own requests.
+      </section>
+    </section>
+
+    <section *ngIf="details" class="status">
+      <section class="status-container" *ngIf="details.approved">
+        APPROVED
+        <img class="status-image" src="assets/check.svg">
+      </section>
+
+      <section class="status-container" *ngIf="details.denied">
+        APPROVED
+        <img class="status-image" *ngIf="details.denied" src="assets/no-entry.svg">
+      </section>
+    </section>
+    <embed 
+     id="pdf-file" 
+     *ngIf="safePdfUrl && details?.approved && !details?.denied"
+     [src]="safePdfUrl" 
+     type="application/pdf">
+    <!-- <div style="font-size: 10px;">Icons made by <a href="https://www.flaticon.com/authors/kiranshastry" title="Kiranshastry">Kiranshastry</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+    <div style="font-size: 10px;">Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> -->
+  </mat-card-content>
+</mat-card>
