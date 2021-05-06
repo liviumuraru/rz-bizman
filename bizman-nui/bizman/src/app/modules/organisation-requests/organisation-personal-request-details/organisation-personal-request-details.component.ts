@@ -12,8 +12,6 @@ import { map } from "rxjs/operators";
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib'
 import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
 
-
-
 @Component({
     selector: 'organisation-personal-request-details',
     templateUrl: './organisation-personal-request-details.component.html',
